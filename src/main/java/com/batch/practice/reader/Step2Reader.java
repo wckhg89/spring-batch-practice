@@ -13,15 +13,16 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @StepScope
-public class Step1Reader implements ItemReader<String> {
+public class Step2Reader implements ItemReader<String> {
 
     private int cnt = 0;
 
     @Override
     public String read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
         cnt++;
-        System.out.println("Call Cnt = " + cnt);
+        System.out.println("Call Step2 Cnt = " + cnt);
 
-        return cnt == 2 ? null : "Reader";
+        return cnt == 2 ? null : "Step2 Reader";
+
     }
 }

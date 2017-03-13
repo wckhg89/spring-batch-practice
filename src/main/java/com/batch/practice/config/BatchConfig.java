@@ -1,7 +1,9 @@
 package com.batch.practice.config;
 
 import com.batch.practice.processor.Step1Processor;
+import com.batch.practice.processor.Step2Processor;
 import com.batch.practice.reader.Step1Reader;
+import com.batch.practice.reader.Step2Reader;
 import com.batch.practice.writer.Step1Writer;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -11,6 +13,7 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.listener.ExecutionContextPromotionListener;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ItemProcessor;
@@ -54,23 +57,56 @@ public class BatchConfig {
         return new Step1Writer();
     }
 
+
     @Bean
-    public Step step1() {
+    @StepScope
+    public ItemReader<String> step2Reader () {
+        return new Step2Reader();
+    }
+
+    @Bean
+    @StepScope
+    public ItemProcessor<String, String> step2Processor () {
+        return new Step2Processor();
+    }
+
+
+
+    @Bean
+    public Step step1 () {
         return stepBuilderFactory.get("step1")
                 .<String, String>chunk(1)
                 .reader(step1Reader())
                 .processor(step1Processor())
                 .writer(step1Writer())
+                .listener(promotionListener())
                 .build();
     }
 
 
     @Bean
+    public Step step2 () {
+        return stepBuilderFactory.get("step2")
+                .<String, String>chunk(1)
+                .reader(step2Reader())
+                .processor(step2Processor())
+                .build();
+    }
+
+    @Bean
     public Job job() throws Exception {
         return jobBuilderFactory.get("job")
-                .flow(step1())
-                .end()
+                .start(step1())
+                .next(step2())
                 .build();
+    }
+
+    @Bean
+    public ExecutionContextPromotionListener promotionListener() {
+        ExecutionContextPromotionListener executionContextPromotionListener = new ExecutionContextPromotionListener();
+        executionContextPromotionListener.setKeys(new String[]{"step2"});
+
+        return executionContextPromotionListener;
     }
 
 }
