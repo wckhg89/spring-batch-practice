@@ -4,6 +4,8 @@ import com.batch.practice.processor.Step1Processor;
 import com.batch.practice.processor.Step2Processor;
 import com.batch.practice.reader.Step1Reader;
 import com.batch.practice.reader.Step2Reader;
+import com.batch.practice.writer.MultiStep1Writer;
+import com.batch.practice.writer.MultiStep2Writer;
 import com.batch.practice.writer.Step1Writer;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -41,37 +43,41 @@ public class BatchConfig {
 
 
     @Bean
-    @StepScope
     public ItemReader<String> step1Reader () {
         return new Step1Reader();
     }
 
     @Bean
-    @StepScope
     public ItemProcessor<String, String> step1Processor () {
         return new Step1Processor();
     }
 
     @Bean
-    @StepScope
     public ItemWriter<String> step1Writer () {
         return new Step1Writer();
     }
 
 
     @Bean
-    @StepScope
     public ItemReader<String> step2Reader () {
         return new Step2Reader();
     }
 
     @Bean
-    @StepScope
     public ItemProcessor<String, String> step2Processor () {
         return new Step2Processor();
     }
 
 
+    @Bean
+    public ItemWriter<String> multiStep1writer () {
+        return new MultiStep1Writer();
+    }
+
+    @Bean
+    public ItemWriter<String> multiStep2writer () {
+        return new MultiStep2Writer();
+    }
 
     @Bean
     public Step step1 () {
@@ -91,6 +97,8 @@ public class BatchConfig {
                 .<String, String>chunk(1)
                 .reader(step2Reader())
                 .processor(step2Processor())
+                .writer(multiStep1writer())
+                .writer(multiStep2writer())
                 .build();
     }
 
