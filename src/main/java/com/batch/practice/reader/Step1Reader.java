@@ -1,6 +1,7 @@
 package com.batch.practice.reader;
 
 
+import org.springframework.batch.core.annotation.AfterStep;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
@@ -22,6 +23,13 @@ public class Step1Reader implements ItemReader<String> {
         cnt++;
         System.out.println("Call Cnt = " + cnt);
 
-        return cnt == 2 ? null : "Reader";
+        // 더 이상 읽어올 Item이 없을 때에는 read()메소드에서 null값을 반환. 그 전까지는 순차적인 값을 리턴
+        // return cnt == 2 ? null : "Reader";
+        return "Reader";
+    }
+
+    @AfterStep
+    public String end () {
+        return null;
     }
 }

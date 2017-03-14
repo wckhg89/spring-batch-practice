@@ -15,6 +15,7 @@ import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.listener.ExecutionContextPromotionListener;
 import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.item.ChunkOrientedTasklet;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
@@ -83,10 +84,10 @@ public class BatchConfig {
                 .build();
     }
 
-
     @Bean
     public Step step2 () {
         return stepBuilderFactory.get("step2")
+                // commit-interval은 트랜잭션이 커밋되기 직전까지 처리되는 item의 수를 의미한다.
                 .<String, String>chunk(1)
                 .reader(step2Reader())
                 .processor(step2Processor())
