@@ -111,7 +111,7 @@ public class BatchConfig {
     }
 
     @Bean
-    public ExecutionContextPromotionListener promotionListener() {
+    public ExecutionContextPromotionListener promotionListener () {
         ExecutionContextPromotionListener executionContextPromotionListener = new ExecutionContextPromotionListener();
         executionContextPromotionListener.setKeys(new String[]{"step2"});
 

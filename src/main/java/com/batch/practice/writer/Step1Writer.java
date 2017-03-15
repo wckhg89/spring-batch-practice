@@ -1,5 +1,6 @@
 package com.batch.practice.writer;
 
+import com.batch.practice.common.StepExecutionAbst;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -14,20 +15,16 @@ import java.util.List;
  */
 @Component
 @StepScope
-public class Step1Writer implements ItemWriter<String> {
-
-    private StepExecution stepExecution;
+public class Step1Writer extends StepExecutionAbst<String> implements ItemWriter<String> {
 
     @Override
     public void write(List<? extends String> items) throws Exception {
         System.out.println("Items from processor : " + items.toString());
-
-        ExecutionContext stepContext = this.stepExecution.getExecutionContext();
-        stepContext.put("step2", "Pass To Next Step");
+        super.putData("step2", "Pass To Next Step");
     }
 
     @BeforeStep
     public void saveStepExecution(StepExecution stepExecution) {
-        this.stepExecution = stepExecution;
+        super.setStepExecution(stepExecution);
     }
 }
