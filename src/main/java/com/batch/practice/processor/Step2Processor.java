@@ -1,11 +1,9 @@
 package com.batch.practice.processor;
 
-import com.batch.practice.common.StepExecutionAbst;
-import org.springframework.batch.core.JobExecution;
+import com.batch.practice.common.SuperStepExecution;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @StepScope
-public class Step2Processor extends StepExecutionAbst<String> implements ItemProcessor<String, String> {
+public class Step2Processor extends SuperStepExecution<String> implements ItemProcessor<String, String> {
     private Object someObject;
 
     @Override

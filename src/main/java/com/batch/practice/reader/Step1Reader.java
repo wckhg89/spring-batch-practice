@@ -27,9 +27,4 @@ public class Step1Reader implements ItemReader<String> {
         return cnt == 2 ? null : "Reader";
         // return "Reader";
     }
-
-    @AfterStep
-    public String end () {
-        return null;
-    }
 }
