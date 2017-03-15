@@ -1,5 +1,6 @@
 package com.batch.practice.common;
 
+import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.item.ExecutionContext;
 
@@ -16,6 +17,17 @@ public class StepExecutionAbst <T> implements StepExecutionInterface {
 
         ExecutionContext stepContext = this.stepExecution.getExecutionContext();
         stepContext.put(key, data);
+    }
+
+    public Object getData (String key) {
+        if (this.stepExecution == null) {
+            throw new NullPointerException("StepExecution is null");
+        }
+
+        JobExecution jobExecution = stepExecution.getJobExecution();
+        ExecutionContext jobContext = jobExecution.getExecutionContext();
+
+        return jobContext.get(key);
     }
 
     @Override

@@ -97,8 +97,6 @@ public class BatchConfig {
                 .<String, String>chunk(1)
                 .reader(step2Reader())
                 .processor(step2Processor())
-                .writer(multiStep1writer())
-                .writer(multiStep2writer())
                 .build();
     }
 

@@ -1,5 +1,6 @@
 package com.batch.practice.processor;
 
+import com.batch.practice.common.StepExecutionAbst;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.BeforeStep;
@@ -13,21 +14,21 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @StepScope
-public class Step2Processor implements ItemProcessor<String, String> {
+public class Step2Processor extends StepExecutionAbst<String> implements ItemProcessor<String, String> {
     private Object someObject;
 
     @Override
     public String process(String item) throws Exception {
-
         System.out.println(someObject + " " + item);
+
+
         return null;
     }
 
     @BeforeStep
     public void retrieveInterstepData(StepExecution stepExecution) {
-        JobExecution jobExecution = stepExecution.getJobExecution();
-        ExecutionContext jobContext = jobExecution.getExecutionContext();
-        this.someObject = jobContext.get("step2");
+        super.setStepExecution(stepExecution);
+        this.someObject = super.getData("step2");
 
     }
 }
