@@ -9,6 +9,7 @@ import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.BeforeStep;
+import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.batch.test.MetaDataInstanceFactory;
 import org.springframework.batch.test.StepScopeTestExecutionListener;
@@ -39,22 +40,35 @@ public class BatchApplicationTests {
 
 	@Test
 	public void testStep1() throws Exception {
-		commonAssertions(jobLauncherTestUtils.launchStep("step1"));
+        JobExecution jobExecution = jobLauncherTestUtils.launchStep("step1");
+
+        // put data to executionCtx test
+        assertEquals(getDataFromExecutionContext(jobExecution), "Pass To Next Step");
+
+		commonAssertions(jobExecution);
 	}
 
 
     @Test
     public void testStep2() throws Exception {
         StepExecution execution = MetaDataInstanceFactory.createStepExecution();
-        execution.getExecutionContext().putString("step2", "Pass To Next Step");
+        execution.getExecutionContext().put("step2", "Pass To Next Step");
 
-        commonAssertions(jobLauncherTestUtils.launchStep("step2", execution.getExecutionContext()));
+        JobExecution jobExecution = jobLauncherTestUtils.launchStep("step2", execution.getExecutionContext());
+
+        // get data from executionCtx test
+        assertEquals(getDataFromExecutionContext(jobExecution), "Pass To Next Step");
+
+        commonAssertions(jobExecution);
+    }
+
+    private Object getDataFromExecutionContext(JobExecution jobExecution) {
+        return jobExecution.getExecutionContext().get("step2");
     }
 
 
-	private void commonAssertions(JobExecution jobExecution) {
+    private void commonAssertions(JobExecution jobExecution) {
 		assertNotNull(jobExecution);
-
 		BatchStatus batchStatus = jobExecution.getStatus();
 		assertEquals(BatchStatus.COMPLETED, batchStatus);
 		assertFalse(batchStatus.isUnsuccessful());
