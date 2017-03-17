@@ -22,8 +22,8 @@ public class Step2Reader implements ItemReader<String> {
         cnt++;
         System.out.println("Call Step2 Cnt = " + cnt);
 
-        return cnt == 2 ? null : "Step2 Reader";
-        // return "Step2 Reader";
+        // return cnt == 2 ? null : "Step2 Reader";
+        return "Step2 Reader";
 
     }
 }

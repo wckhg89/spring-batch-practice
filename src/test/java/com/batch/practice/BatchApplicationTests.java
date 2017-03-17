@@ -4,12 +4,12 @@ import com.batch.practice.config.BatchConfig;
 import com.batch.practice.config.TestConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.annotation.BeforeStep;
-import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.batch.test.MetaDataInstanceFactory;
 import org.springframework.batch.test.StepScopeTestExecutionListener;
@@ -20,7 +20,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import java.util.List;
-
 import static org.junit.Assert.*;
 
 
@@ -29,6 +28,8 @@ import static org.junit.Assert.*;
         StepScopeTestExecutionListener.class })
 @ContextConfiguration(classes = {BatchConfig.class, TestConfig.class})
 public class BatchApplicationTests {
+
+    private static Logger logger = LoggerFactory.getLogger(BatchApplicationTests.class);
 
 	@Autowired
 	private JobLauncherTestUtils jobLauncherTestUtils;

@@ -86,7 +86,7 @@ public class BatchConfig {
                 .reader(step1Reader())
                 .processor(step1Processor())
                 .writer(step1Writer())
-                .listener(promotionListener())
+//                .listener(promotionListener())
                 .build();
     }
 
@@ -97,6 +97,7 @@ public class BatchConfig {
                 .<String, String>chunk(1)
                 .reader(step2Reader())
                 .processor(step2Processor())
+                .writer(multiStep2writer())
                 .build();
     }
 
@@ -104,7 +105,6 @@ public class BatchConfig {
     public Job job() throws Exception {
         return jobBuilderFactory.get("job")
                 .start(step1())
-                .next(step2())
                 .build();
     }
 
