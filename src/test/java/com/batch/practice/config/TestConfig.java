@@ -2,6 +2,7 @@ package com.batch.practice.config;
 
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
  */
 
 @Configuration
+@ComponentScan("com.batch.practice")
 public class TestConfig {
 
     @Bean

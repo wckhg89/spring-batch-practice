@@ -1,6 +1,11 @@
 package com.batch.practice.reader;
 
 
+import com.batch.practice.common.SuperStepExecution;
+import com.batch.practice.domain.Content;
+import com.batch.practice.domain.Member;
+import org.springframework.batch.core.StepExecution;
+import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
@@ -8,22 +13,42 @@ import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
+import java.util.List;
+
 /**
  * Created by kanghonggu on 2017. 3. 13..
  */
 @Component
 @StepScope
-public class Step2Reader implements ItemReader<String> {
+public class Step2Reader extends SuperStepExecution<Member> implements ItemReader<List<Content>> {
 
-    private int cnt = 0;
+    private boolean isRead;
+    private Member specificMember;
+
+    @PostConstruct
+    public void init () {
+        isRead = false;
+    }
 
     @Override
-    public String read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-        cnt++;
-        System.out.println("Call Step2 Cnt = " + cnt);
+    @Transactional
+    public List<Content> read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
 
-        // return cnt == 2 ? null : "Step2 Reader";
-        return "Step2 Reader";
+        if (!isRead) {
+            isRead = true;
+
+            return this.specificMember.getContents();
+        }
+
+        return null;
+    }
+
+    @BeforeStep
+    public void retrieveInterstepData(StepExecution stepExecution) {
+        super.setStepExecution(stepExecution);
+        this.specificMember = (Member) super.getData("SPECIFIC_MEMBER");
 
     }
 }

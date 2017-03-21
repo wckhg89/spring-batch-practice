@@ -1,12 +1,16 @@
 package com.batch.practice.writer;
 
 import com.batch.practice.common.SuperStepExecution;
+import com.batch.practice.domain.Content;
+import com.batch.practice.repository.ContentRepository;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.AfterStep;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -14,17 +18,17 @@ import java.util.List;
  */
 @Component
 @StepScope
-public class Step1Writer extends SuperStepExecution<String> implements ItemWriter<String> {
+public class Step2Writer implements ItemWriter<Content> {
+
+    @Autowired
+    private ContentRepository contentRepository;
 
     @Override
-    public void write(List<? extends String> items) throws Exception {
-        System.out.println("Items from processor : " + items.toString());
+    @Transactional
+    public void write(List<? extends Content> items) throws Exception {
+
+        contentRepository.save(items);
 
     }
 
-    @AfterStep
-    public void saveStepExecution(StepExecution stepExecution) {
-        super.setStepExecution(stepExecution);
-        super.putData("step2", "Pass To Next Step");
-    }
 }

@@ -1,12 +1,15 @@
 package com.batch.practice.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kanghonggu on 2017. 3. 21..
@@ -41,6 +44,9 @@ public class Member {
     private Boolean deleted = false;
     @Column(nullable = false)
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    @JsonIgnore
+    private List<Content> contents = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -61,6 +67,10 @@ public class Member {
         this.name = StringUtils.isEmpty(newMember.name) ? this.name : newMember.name;
         this.password = StringUtils.isEmpty(newMember.password) ? this.password : newMember.password;
         this.email = StringUtils.isEmpty(newMember.email) ? this.email : newMember.email;
+    }
+
+    public List<Content> getContents() {
+        return contents;
     }
 
 }
