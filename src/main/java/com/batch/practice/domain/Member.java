@@ -73,4 +73,8 @@ public class Member {
         return contents;
     }
 
+    public void setContents (List<Content> contents) {
+        this.contents = contents;
+    }
+
 }

@@ -2,6 +2,9 @@ package com.batch.practice;
 
 import com.batch.practice.config.BatchConfig;
 import com.batch.practice.config.TestConfig;
+import com.batch.practice.domain.Content;
+import com.batch.practice.domain.Member;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -19,6 +22,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
 
@@ -43,8 +47,7 @@ public class BatchApplicationTests {
 	public void testStep1() throws Exception {
         JobExecution jobExecution = jobLauncherTestUtils.launchStep("step1");
 
-        // put data to executionCtx test
-        assertEquals(getDataFromExecutionContext(jobExecution), "Pass To Next Step");
+        assertNotNull(getDataFromExecutionContext(jobExecution));
 
 		commonAssertions(jobExecution);
 	}
@@ -52,19 +55,27 @@ public class BatchApplicationTests {
 
     @Test
     public void testStep2() throws Exception {
+
+		Member mockMember = new Member(2L, "test", "줌구2", "wckhg89@gmail.com");
+
+		List<Content> contents = new ArrayList<>();
+		contents.add(new Content(mockMember, "test", new DateTime()));
+
+		mockMember.setContents(contents);
+
         StepExecution execution = MetaDataInstanceFactory.createStepExecution();
-        execution.getExecutionContext().put("step2", "Pass To Next Step");
+        execution.getExecutionContext().put("SPECIFIC_MEMBER", mockMember);
 
         JobExecution jobExecution = jobLauncherTestUtils.launchStep("step2", execution.getExecutionContext());
 
         // get data from executionCtx test
-        assertEquals(getDataFromExecutionContext(jobExecution), "Pass To Next Step");
+        assertEquals(getDataFromExecutionContext(jobExecution), mockMember);
 
         commonAssertions(jobExecution);
     }
 
     private Object getDataFromExecutionContext(JobExecution jobExecution) {
-        return jobExecution.getExecutionContext().get("step2");
+        return jobExecution.getExecutionContext().get("SPECIFIC_MEMBER");
     }
 
 

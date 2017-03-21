@@ -17,7 +17,7 @@ import java.util.List;
 @StepScope
 public class Step2Processor implements ItemProcessor<List<Content>, Content> {
 
-    private final int SPECIFIC_CONTENT_IDX = 1;
+    private final int SPECIFIC_CONTENT_IDX = 0;
 
     @Override
     public Content process(List<Content> item) throws Exception {

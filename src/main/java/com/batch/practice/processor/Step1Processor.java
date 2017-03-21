@@ -1,10 +1,8 @@
 package com.batch.practice.processor;
 
 import com.batch.practice.common.SuperStepExecution;
-import com.batch.practice.domain.Content;
 import com.batch.practice.domain.Member;
 import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.annotation.AfterStep;
 import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;

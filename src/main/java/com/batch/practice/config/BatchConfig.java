@@ -96,7 +96,7 @@ public class BatchConfig {
     @Bean
     public ExecutionContextPromotionListener promotionListener () {
         ExecutionContextPromotionListener executionContextPromotionListener = new ExecutionContextPromotionListener();
-        executionContextPromotionListener.setKeys(new String[]{"step2"});
+        executionContextPromotionListener.setKeys(new String[]{"SPECIFIC_MEMBER"});
 
         return executionContextPromotionListener;
     }

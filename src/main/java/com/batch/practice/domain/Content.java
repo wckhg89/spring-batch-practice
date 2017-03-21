@@ -37,4 +37,10 @@ public class Content {
     public void modifyContent (String newContent) {
         this.content = newContent;
     }
+
+    public Content(Member member, String content, DateTime createdAt) {
+        this.member = member;
+        this.content = content;
+        this.createdAt = createdAt;
+    }
 }
