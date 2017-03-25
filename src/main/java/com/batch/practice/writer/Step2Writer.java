@@ -1,10 +1,7 @@
 package com.batch.practice.writer;
 
-import com.batch.practice.common.SuperStepExecution;
 import com.batch.practice.domain.Content;
 import com.batch.practice.repository.ContentRepository;
-import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.annotation.AfterStep;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;

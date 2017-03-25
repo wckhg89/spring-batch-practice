@@ -33,7 +33,6 @@ public class Step2Reader extends SuperStepExecution<Member> implements ItemReade
     }
 
     @Override
-    @Transactional
     public List<Content> read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
 
         if (!isRead) {

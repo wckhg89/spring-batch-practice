@@ -29,7 +29,9 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-batch')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	runtime('org.springframework.boot:spring-boot-devtools')
+	// https://mvnrepository.com/artifact/org.hsqldb/hsqldb
+	compile group: 'org.hsqldb', name: 'hsqldb', version: '2.3.4'
+
 	// https://mvnrepository.com/artifact/com.h2database/h2
 	compile group: 'com.h2database', name: 'h2', version: '1.4.193'
 

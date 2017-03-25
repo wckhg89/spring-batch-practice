@@ -44,7 +44,7 @@ public class Member {
     private Boolean deleted = false;
     @Column(nullable = false)
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "member")
     @JsonIgnore
     private List<Content> contents = new ArrayList<>();
 

@@ -38,6 +38,9 @@ public class Content {
         this.content = newContent;
     }
 
+    public Content() {
+    }
+
     public Content(Member member, String content, DateTime createdAt) {
         this.member = member;
         this.content = content;

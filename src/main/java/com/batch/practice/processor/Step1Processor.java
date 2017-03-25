@@ -15,9 +15,10 @@ import java.util.List;
  */
 @Component
 @StepScope
-public class Step1Processor extends SuperStepExecution<Member> implements ItemProcessor<List<Member>, Member> {
+public class Step1Processor extends SuperStepExecution<Member>
+        implements ItemProcessor<List<Member>, Member> {
 
-    private final int SPECIFIC_MEMBER_IDX = 1;
+    private final int SPECIFIC_MEMBER_IDX = 0;
 
     @Override
     public Member process(List<Member> item) throws Exception {

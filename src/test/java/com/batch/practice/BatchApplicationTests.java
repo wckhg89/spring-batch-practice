@@ -22,6 +22,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
@@ -39,11 +40,13 @@ public class BatchApplicationTests {
 	private JobLauncherTestUtils jobLauncherTestUtils;
 
 	@Test
+	@Transactional
 	public void testJob() throws Exception {
 		commonAssertions(jobLauncherTestUtils.launchJob());
 	}
 
 	@Test
+	@Transactional
 	public void testStep1() throws Exception {
         JobExecution jobExecution = jobLauncherTestUtils.launchStep("step1");
 
@@ -54,6 +57,7 @@ public class BatchApplicationTests {
 
 
     @Test
+	@Transactional
     public void testStep2() throws Exception {
 
 		Member mockMember = new Member(2L, "test", "줌구2", "wckhg89@gmail.com");

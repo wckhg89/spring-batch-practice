@@ -1,6 +1,5 @@
 package com.batch.practice;
 
-import javafx.application.Application;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
