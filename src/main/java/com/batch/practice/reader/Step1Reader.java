@@ -3,6 +3,8 @@ package com.batch.practice.reader;
 
 import com.batch.practice.domain.Member;
 import com.batch.practice.repository.MemberRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.AfterStep;
 import org.springframework.batch.core.annotation.BeforeStep;
@@ -24,6 +26,8 @@ import java.util.List;
 @StepScope
 public class Step1Reader implements ItemReader<List<Member>> {
 
+    private static Logger logger = LoggerFactory.getLogger(Step1Reader.class);
+
     @Autowired
     private MemberRepository memberRepository;
 
@@ -36,9 +40,12 @@ public class Step1Reader implements ItemReader<List<Member>> {
 
     @Override
     public List<Member> read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+        logger.info("Step1 Reader Start");
         if (!isRead) {
             List<Member> memberList = memberRepository.findAll();
             isRead = true;
+
+            logger.info("Step1 Reader 회원 수 : {}", memberList.size());
 
             return memberList;
         }

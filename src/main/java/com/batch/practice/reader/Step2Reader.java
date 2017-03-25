@@ -4,6 +4,8 @@ package com.batch.practice.reader;
 import com.batch.practice.common.SuperStepExecution;
 import com.batch.practice.domain.Content;
 import com.batch.practice.domain.Member;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -24,6 +26,7 @@ import java.util.List;
 @StepScope
 public class Step2Reader extends SuperStepExecution<Member> implements ItemReader<List<Content>> {
 
+    private static Logger logger = LoggerFactory.getLogger(Step2Reader.class);
     private boolean isRead;
     private Member specificMember;
 
@@ -35,10 +38,14 @@ public class Step2Reader extends SuperStepExecution<Member> implements ItemReade
     @Override
     public List<Content> read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
 
+        logger.info("Step2 Reader 시작");
         if (!isRead) {
             isRead = true;
+            List<Content> contentList = this.specificMember.getContents();
 
-            return this.specificMember.getContents();
+            logger.info("Step2 Reader 첫번째 회원의 게시글 수 : {}", contentList.size());
+
+            return contentList;
         }
 
         return null;

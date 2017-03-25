@@ -77,4 +77,12 @@ public class Member {
         this.contents = contents;
     }
 
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberId='" + memberId + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

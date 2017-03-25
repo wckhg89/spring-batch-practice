@@ -46,4 +46,14 @@ public class Content {
         this.content = content;
         this.createdAt = createdAt;
     }
+
+    @Override
+    public String toString() {
+        return "Content{" +
+                "id=" + id +
+                ", member=" + member +
+                ", content='" + content + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }
