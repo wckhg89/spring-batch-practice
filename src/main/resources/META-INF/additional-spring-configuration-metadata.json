@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "batch.schema.script",
+      "type": "java.lang.String",
+      "description": "Description for batch.schema.script."
+    }
+  ]
+}

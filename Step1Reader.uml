@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.batch.practice.reader.Step1Reader</OriginalElement>
+  <nodes>
+    <node x="333.0" y="44.5">org.springframework.stereotype.Component</node>
+    <node x="121.0" y="44.5">com.batch.practice.repository.MemberRepository</node>
+    <node x="491.0" y="55.5">org.springframework.batch.core.configuration.annotation.StepScope</node>
+    <node x="609.0" y="0.0">com.batch.practice.common.SuperStepExecution</node>
+    <node x="0.0" y="375.0">com.batch.practice.domain.Member</node>
+    <node x="465.5" y="201.0">com.batch.practice.processor.Step1Processor</node>
+    <node x="0.0" y="44.5">org.springframework.batch.item.ItemReader</node>
+    <node x="182.87499999999997" y="190.0">com.batch.practice.reader.Step1Reader</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.batch.practice.reader.Step1Reader" target="com.batch.practice.repository.MemberRepository">
+      <point x="-27.25" y="-70.0" />
+      <point x="264.625" y="170.0" />
+      <point x="217.0" y="170.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.batch.practice.reader.Step1Reader" target="org.springframework.batch.core.configuration.annotation.StepScope">
+      <point x="81.75" y="-70.0" />
+      <point x="373.625" y="170.0" />
+      <point x="515.5" y="170.0" />
+      <point x="-24.5" y="14.5" />
+    </edge>
+    <edge source="com.batch.practice.processor.Step1Processor" target="org.springframework.batch.core.configuration.annotation.StepScope">
+      <point x="0.0" y="-59.0" />
+      <point x="24.5" y="14.5" />
+    </edge>
+    <edge source="com.batch.practice.reader.Step1Reader" target="org.springframework.stereotype.Component">
+      <point x="27.25" y="-70.0" />
+      <point x="319.125" y="170.0" />
+      <point x="366.75" y="170.0" />
+      <point x="-33.75" y="25.5" />
+    </edge>
+    <edge source="com.batch.practice.processor.Step1Processor" target="com.batch.practice.common.SuperStepExecution">
+      <point x="66.0" y="-59.0" />
+      <point x="630.5" y="170.0" />
+      <point x="765.5" y="170.0" />
+      <point x="0.0" y="70.0" />
+    </edge>
+    <edge source="com.batch.practice.reader.Step1Reader" target="org.springframework.batch.item.ItemReader">
+      <point x="-81.75" y="-70.0" />
+      <point x="210.12499999999997" y="170.0" />
+      <point x="50.5" y="170.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.batch.practice.processor.Step1Processor" target="org.springframework.stereotype.Component">
+      <point x="-66.0" y="-59.0" />
+      <point x="498.5" y="160.0" />
+      <point x="434.25" y="160.0" />
+      <point x="33.75" y="25.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6995645863570392" x="461.52385892116183" y="352.44294605809125" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

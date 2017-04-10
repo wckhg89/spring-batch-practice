@@ -17,14 +17,12 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.springframework.context.annotation.Primary;
 
-import javax.sql.DataSource;
-import java.sql.SQLException;
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
@@ -40,6 +38,17 @@ public class BatchConfig {
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
 
+
+
+    @Bean
+    @Primary
+    public BatchProperties batchProperties () {
+        final String SCHEMA_LOCATION = "classpath:custom_batch_schema-h2.sql";
+        BatchProperties batchProperties = new BatchProperties();
+        batchProperties.setSchema(SCHEMA_LOCATION);
+
+        return batchProperties;
+    }
 
     @Bean
     public ItemReader<List<Member>> step1Reader () {
@@ -87,6 +96,7 @@ public class BatchConfig {
                 .reader(step2Reader())
                 .processor(step2Processor())
                 .writer(step2Writer())
+                .listener(promotionListener())
                 .build();
     }
 
