@@ -16,6 +16,7 @@ import java.util.List;
  */
 
 @Entity
+@Table(name = "member")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Member {
 

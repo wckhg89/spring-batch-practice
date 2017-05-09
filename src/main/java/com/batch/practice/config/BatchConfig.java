@@ -40,15 +40,16 @@ public class BatchConfig {
 
 
 
-    @Bean
+    /*@Bean
     @Primary
     public BatchProperties batchProperties () {
         final String SCHEMA_LOCATION = "classpath:custom_batch_schema-h2.sql";
+
         BatchProperties batchProperties = new BatchProperties();
         batchProperties.setSchema(SCHEMA_LOCATION);
 
         return batchProperties;
-    }
+    }*/
 
     @Bean
     public ItemReader<List<Member>> step1Reader () {

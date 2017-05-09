@@ -9,6 +9,7 @@ import javax.persistence.*;
  * Created by 강홍구 on 2016-12-11.
  */
 @Entity
+@Table(name = "content")
 public class Content {
 
     @Id

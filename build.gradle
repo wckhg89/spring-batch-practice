@@ -51,6 +51,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework/spring-test
 	compile group: 'org.springframework', name: 'spring-test', version: '4.3.6.RELEASE'
 
-
+    runtime('mysql:mysql-connector-java')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
