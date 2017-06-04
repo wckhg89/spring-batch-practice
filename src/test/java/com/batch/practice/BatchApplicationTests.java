@@ -1,5 +1,6 @@
 package com.batch.practice;
 
+import com.batch.practice.common.DataShareBean;
 import com.batch.practice.config.BatchConfig;
 import com.batch.practice.config.TestConfig;
 import com.batch.practice.domain.Content;
@@ -36,6 +37,9 @@ public class BatchApplicationTests {
 
     private static Logger logger = LoggerFactory.getLogger(BatchApplicationTests.class);
 
+    @Autowired
+	private DataShareBean<Member> dataShareBean;
+
 	@Autowired
 	private JobLauncherTestUtils jobLauncherTestUtils;
 
@@ -45,9 +49,41 @@ public class BatchApplicationTests {
 		commonAssertions(jobLauncherTestUtils.launchJob());
 	}
 
+
 	@Test
 	@Transactional
-	public void testStep1() throws Exception {
+	public void testStep1_SHARED_BEAN () throws Exception {
+		JobExecution jobExecution = jobLauncherTestUtils.launchStep("step1");
+
+		assertNotNull(getDataFromDataSharedBean());
+
+		commonAssertions(jobExecution);
+	}
+
+	@Test
+	@Transactional
+	public void testStep2_SHARED_BEAN () throws Exception {
+		Member mockMember = new Member(2L, "test", "줌구2", "wckhg89@gmail.com");
+
+		List<Content> contents = new ArrayList<>();
+		contents.add(new Content(mockMember, "test", new DateTime()));
+
+		mockMember.setContents(contents);
+
+		dataShareBean.putData("SPECIFIC_MEMBER", mockMember);
+
+
+		JobExecution jobExecution = jobLauncherTestUtils.launchStep("step2");
+
+		// get data from executionCtx test
+		assertEquals(getDataFromDataSharedBean(), mockMember);
+
+		commonAssertions(jobExecution);
+	}
+
+	@Test
+	@Transactional
+	public void testStep1_STEP_EXECUTION () throws Exception {
         JobExecution jobExecution = jobLauncherTestUtils.launchStep("step1");
 
         assertNotNull(getDataFromExecutionContext(jobExecution));
@@ -55,10 +91,9 @@ public class BatchApplicationTests {
 		commonAssertions(jobExecution);
 	}
 
-
     @Test
 	@Transactional
-    public void testStep2() throws Exception {
+    public void testStep2_STEP_EXECUTION() throws Exception {
 
 		Member mockMember = new Member(2L, "test", "줌구2", "wckhg89@gmail.com");
 
@@ -77,6 +112,10 @@ public class BatchApplicationTests {
 
         commonAssertions(jobExecution);
     }
+
+    private Object getDataFromDataSharedBean () {
+		return dataShareBean.getData("SPECIFIC_MEMBER");
+	}
 
     private Object getDataFromExecutionContext(JobExecution jobExecution) {
         return jobExecution.getExecutionContext().get("SPECIFIC_MEMBER");

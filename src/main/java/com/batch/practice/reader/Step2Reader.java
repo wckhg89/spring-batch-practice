@@ -1,6 +1,7 @@
 package com.batch.practice.reader;
 
 
+import com.batch.practice.common.DataShareBean;
 import com.batch.practice.common.SuperStepExecution;
 import com.batch.practice.domain.Content;
 import com.batch.practice.domain.Member;
@@ -13,6 +14,7 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -25,6 +27,9 @@ import java.util.List;
 @Component
 @StepScope
 public class Step2Reader extends SuperStepExecution<Member> implements ItemReader<List<Content>> {
+
+    @Autowired
+    private DataShareBean<Member> dataShareBean;
 
     private static Logger logger = LoggerFactory.getLogger(Step2Reader.class);
     private boolean isRead;
@@ -53,8 +58,8 @@ public class Step2Reader extends SuperStepExecution<Member> implements ItemReade
 
     @BeforeStep
     public void retrieveInterstepData(StepExecution stepExecution) {
-        super.setStepExecution(stepExecution);
-        this.specificMember = (Member) super.getData("SPECIFIC_MEMBER");
-
+        // super.setStepExecution(stepExecution);
+        // this.specificMember = (Member) super.getData("SPECIFIC_MEMBER");
+        this.specificMember = dataShareBean.getData("SPECIFIC_MEMBER");
     }
 }
