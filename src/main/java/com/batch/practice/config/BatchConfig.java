@@ -38,8 +38,6 @@ public class BatchConfig {
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
 
-
-
     /*@Bean
     @Primary
     public BatchProperties batchProperties () {
